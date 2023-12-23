@@ -5,7 +5,7 @@ import LoginInputs from "./LoginInputs";
 import LoginFooter from "./LoginFooter";
 import { validateLoginForm } from "../../../shared/utils/validators";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 import {
   loginAction,
   resetErrorAction,
@@ -48,3 +48,11 @@ const Login = () => {
 };
 
 export default Login;
+
+export const loader = () => {
+  const token = localStorage.getItem("discord-user");
+  if (token) {
+    return redirect("/");
+  }
+  return null;
+};

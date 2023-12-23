@@ -26,10 +26,11 @@ const PrimaryButton = ({
     >
       {auth && loading ? (
         <ClipLoader loading={loading} size={15} color="#fff" />
+      ) : auth && !loading ? (
+        label
       ) : (
         label
       )}
-      {!auth && label}
     </Button>
   );
 };

@@ -9,7 +9,7 @@ import {
   registerAction,
   resetErrorAction,
 } from "../../../redux/actions/authActions";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -55,3 +55,11 @@ const Register = () => {
 };
 
 export default Register;
+
+export const loader = () => {
+  const token = localStorage.getItem("discord-user");
+  if (token) {
+    return redirect("/");
+  }
+  return null;
+};

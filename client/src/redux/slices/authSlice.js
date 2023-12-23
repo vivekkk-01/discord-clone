@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  userDetails: JSON.parse(localStorage.getItem("discord-user"))
-    ? JSON.parse(localStorage.getItem("discord-user"))
+  userDetails: localStorage.getItem("discord-user")
+    ? localStorage.getItem("discord-user")
     : null,
   loading: false,
   error: null,
@@ -18,11 +18,13 @@ const authSlice = createSlice({
     setLogin: (state, { payload }) => {
       state.loading = false;
       state.userDetails = payload;
+      localStorage.setItem("discord-user", payload.token);
       state.error = null;
     },
     setRegister: (state, { payload }) => {
       state.loading = false;
       state.userDetails = payload;
+      localStorage.setItem("discord-user", payload.token);
       state.error = null;
     },
     setError: (state, { payload }) => {
