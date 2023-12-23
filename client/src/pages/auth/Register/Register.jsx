@@ -1,15 +1,23 @@
 import React, { useEffect, useState } from "react";
-import AuthBox from "../../shared/components/AuthBox";
+import AuthBox from "../../../shared/components/AuthBox";
 import { Typography } from "@mui/material";
 import RegisterInputs from "./RegisterInputs";
 import RegisterFooter from "./RegisterFooter";
-import { validateRegisterForm } from "../../shared/utils/validators";
+import { validateRegisterForm } from "../../../shared/utils/validators";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  registerAction,
+  resetErrorAction,
+} from "../../../redux/actions/authActions";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsFormValid(validateRegisterForm(email, password, username));
@@ -17,9 +25,13 @@ const Register = () => {
 
   const handleRegister = () => {
     if (isFormValid) {
-      console.log("Registered...");
+      dispatch(registerAction({ username, email, password }, navigate));
     }
   };
+
+  useEffect(() => {
+    dispatch(resetErrorAction());
+  }, []);
 
   return (
     <AuthBox>

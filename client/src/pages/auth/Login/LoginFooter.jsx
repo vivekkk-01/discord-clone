@@ -1,8 +1,13 @@
 import React from "react";
-import PrimaryButton from "../../shared/components/PrimaryButton";
-import RedirectInput from "../../shared/components/RedirectInput";
+import PrimaryButton from "../../../shared/components/PrimaryButton";
+import RedirectInput from "../../../shared/components/RedirectInput";
 import { useNavigate } from "react-router-dom";
 import { Tooltip } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  closeAlertAction,
+  openAlertAction,
+} from "../../../redux/actions/alertActions";
 
 const getFormNotValidMessage = () => {
   return "Enter email and password!";
@@ -14,10 +19,19 @@ const getFormValidMessage = () => {
 
 const LoginFooter = ({ handleLogin, isFormValid }) => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const pushToRedirectPage = () => {
-    navigate("/redirect");
+    navigate("/auth/register");
   };
+
+  const { loading, error } = useSelector((state) => state.auth);
+
+  if (error) {
+    dispatch(openAlertAction(error));
+    setTimeout(() => {
+      dispatch(closeAlertAction());
+    }, 3000);
+  }
 
   return (
     <>
@@ -30,6 +44,8 @@ const LoginFooter = ({ handleLogin, isFormValid }) => {
             additionalStyles={{ marginTop: "30px" }}
             onClick={handleLogin}
             label="Log in"
+            loading={loading}
+            auth={true}
           />
         </div>
       </Tooltip>

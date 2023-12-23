@@ -1,11 +1,19 @@
 import { Button } from "@mui/material";
 import React from "react";
+import { ClipLoader } from "react-spinners";
 
-const PrimaryButton = ({ label, additionalStyles, disabled, onClick }) => {
+const PrimaryButton = ({
+  label,
+  additionalStyles,
+  disabled,
+  onClick,
+  loading,
+  auth,
+}) => {
   return (
     <Button
       onClick={onClick}
-      disabled={disabled}
+      disabled={auth ? loading || disabled : disabled}
       variant="contained"
       sx={{
         height: "40px",
@@ -16,7 +24,12 @@ const PrimaryButton = ({ label, additionalStyles, disabled, onClick }) => {
       }}
       style={additionalStyles ? additionalStyles : {}}
     >
-      {label}
+      {auth && loading ? (
+        <ClipLoader loading={loading} size={15} color="#fff" />
+      ) : (
+        label
+      )}
+      {!auth && label}
     </Button>
   );
 };

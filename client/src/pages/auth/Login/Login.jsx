@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from "react";
-import AuthBox from "../../shared/components/AuthBox";
+import AuthBox from "../../../shared/components/AuthBox";
 import LoginHeader from "./LoginHeader";
 import LoginInputs from "./LoginInputs";
 import LoginFooter from "./LoginFooter";
-import { validateLoginForm } from "../../shared/utils/validators";
+import { validateLoginForm } from "../../../shared/utils/validators";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+  loginAction,
+  resetErrorAction,
+} from "../../../redux/actions/authActions";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { userDetails, loading, error } = useSelector((state) => state.auth);
 
   useEffect(() => {
     setIsFormValid(validateLoginForm(email, password));
@@ -16,9 +25,13 @@ const Login = () => {
 
   const handleLogin = () => {
     if (isFormValid) {
-      console.log("Logged in...");
+      dispatch(loginAction({ email, password }, navigate));
     }
   };
+
+  useEffect(() => {
+    dispatch(resetErrorAction());
+  }, []);
 
   return (
     <AuthBox>
