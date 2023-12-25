@@ -1,4 +1,5 @@
 const authSocket = require("./middlewares/authSocket");
+const disconnectHandler = require("./socketHandlers/disconnectHandler");
 const newConnectionHandler = require("./socketHandlers/newConnectionHandler");
 
 const registerSocketServer = (server) => {
@@ -16,6 +17,10 @@ const registerSocketServer = (server) => {
     console.log("Connected to the socket:-", socket.id);
 
     newConnectionHandler(socket, io);
+
+    socket.on("disconnect", () => {
+      disconnectHandler(socket.id);
+    });
   });
 };
 
