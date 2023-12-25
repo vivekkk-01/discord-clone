@@ -1,5 +1,6 @@
 import io from "socket.io-client";
-
+import store from "../redux/store";
+import { pendingFriendInvitationsAction } from "../redux/actions/friendsActions";
 let socket = null;
 
 export const connectWithSocketServer = (userDetails) => {
@@ -11,5 +12,9 @@ export const connectWithSocketServer = (userDetails) => {
 
   socket.on("connect", () => {
     console.log("connected with server...", socket);
+  });
+
+  socket.on("friend-invitations", (data) => {
+    store.dispatch(pendingFriendInvitationsAction(data));
   });
 };
