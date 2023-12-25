@@ -5,7 +5,7 @@ const verifyToken = (req, res, next) => {
   let token = req.headers.authorization;
   try {
     if (!token) return res.status(401).json("You are not authorized!");
-    token = token.split(" ");
+    token = token.split(" ")[1];
     if (!token) return res.status(401).json("You are not authorized!");
     jwt.verify(token, process.env.JWT_SECRET, async (err, tokenData) => {
       if (err) return res.status(401).json("Authentication Failed!");
