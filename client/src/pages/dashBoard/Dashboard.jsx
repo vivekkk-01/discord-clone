@@ -5,6 +5,7 @@ import FriendsSideBar from "./friendsSidebar/FriendsSideBar";
 import Messenger from "./messenger/Messenger";
 import AppBar from "./appbar/AppBar";
 import { redirect, useNavigate } from "react-router-dom";
+import { connectWithSocketServer } from "../../communication/socketServer";
 
 const Wrapper = styled("div")({
   width: "100vw",
@@ -13,14 +14,16 @@ const Wrapper = styled("div")({
 });
 
 const Dashboard = () => {
-  const token = localStorage.getItem("discord-user");
+  const userDetails = JSON.parse(localStorage.getItem("discord-user"));
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!token) {
+    if (!userDetails) {
       navigate("/auth/login");
+    } else {
+      connectWithSocketServer();
     }
-  }, [token]);
+  }, [userDetails]);
 
   return (
     <Wrapper>
@@ -35,8 +38,8 @@ const Dashboard = () => {
 export default Dashboard;
 
 export const loader = () => {
-  const token = localStorage.getItem("discord-user");
-  if (!token) {
+  const userDetails = JSON.parse(localStorage.getItem("discord-user"));
+  if (!userDetails) {
     return redirect("/auth/login");
   }
   return null;

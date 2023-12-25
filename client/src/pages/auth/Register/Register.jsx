@@ -57,8 +57,8 @@ const Register = () => {
 export default Register;
 
 export const loader = () => {
-  const token = localStorage.getItem("discord-user");
-  if (token) {
+  const userDetails = JSON.parse(localStorage.getItem("discord-user"));
+  if (userDetails) {
     return redirect("/");
   }
   return null;

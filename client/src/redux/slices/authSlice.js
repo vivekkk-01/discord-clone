@@ -18,13 +18,13 @@ const authSlice = createSlice({
     setLogin: (state, { payload }) => {
       state.loading = false;
       state.userDetails = payload;
-      localStorage.setItem("discord-user", payload.token);
+      localStorage.setItem("discord-user", JSON.stringify(payload));
       state.error = null;
     },
     setRegister: (state, { payload }) => {
       state.loading = false;
       state.userDetails = payload;
-      localStorage.setItem("discord-user", payload.token);
+      localStorage.setItem("discord-user", JSON.stringify(payload));
       state.error = null;
     },
     setError: (state, { payload }) => {
