@@ -8,20 +8,23 @@ import AuthRoot from "./pages/auth/AuthRoot";
 import Dashboard, {
   loader as dashboardLoader,
 } from "./pages/dashBoard/Dashboard";
+import Root from "./pages/Root";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Dashboard />,
-    loader: dashboardLoader,
-  },
-  { path: "/dashboard", element: <Dashboard /> },
-  {
-    path: "/auth",
-    element: <AuthRoot />,
+    element: <Root />,
     children: [
-      { path: "register", element: <Register />, loader: registerLoader },
-      { path: "login", element: <Login />, loader: loginLoader },
+      { index: true, element: <Dashboard />, loader: dashboardLoader },
+      { path: "/dashboard", element: <Dashboard />, loader: dashboardLoader },
+      {
+        path: "/auth",
+        element: <AuthRoot />,
+        children: [
+          { path: "register", element: <Register />, loader: registerLoader },
+          { path: "login", element: <Login />, loader: loginLoader },
+        ],
+      },
     ],
   },
 ]);

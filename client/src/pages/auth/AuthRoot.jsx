@@ -4,11 +4,13 @@ import AlertNotification from "../../shared/components/AlertNotification";
 import { useSelector } from "react-redux";
 
 const AuthRoot = () => {
-  const { showAlert, alertContent } = useSelector((state) => state.alert);
+  const { showErrorAlert, errorAlertContent } = useSelector(
+    (state) => state.errorAlert
+  );
   return (
     <>
       <Outlet />
-      {showAlert && <AlertNotification alertContent={alertContent} />}
+      {showErrorAlert && <AlertNotification alertContent={errorAlertContent} />}
     </>
   );
 };

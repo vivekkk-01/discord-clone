@@ -1,13 +1,13 @@
 import { Tooltip } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import PrimaryButton from "../../../shared/components/PrimaryButton";
 import RedirectInput from "../../../shared/components/RedirectInput";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  closeAlertAction,
-  openAlertAction,
-} from "../../../redux/actions/alertActions";
+  closeErrorAlertAction,
+  openErrorAlertAction,
+} from "../../../redux/actions/errorAlertActions";
 
 const getFormNotValidMessage = () => {
   return "Enter username, email and password!";
@@ -26,12 +26,14 @@ const RegisterFooter = ({ handleRegister, isFormValid }) => {
 
   const { loading, error } = useSelector((state) => state.auth);
 
-  if (error) {
-    dispatch(openAlertAction(error));
-    setTimeout(() => {
-      dispatch(closeAlertAction());
-    }, 3000);
-  }
+  useEffect(() => {
+    if (error) {
+      dispatch(openErrorAlertAction(error));
+      setTimeout(() => {
+        dispatch(closeErrorAlertAction());
+      }, 3000);
+    }
+  }, [error]);
 
   return (
     <>
