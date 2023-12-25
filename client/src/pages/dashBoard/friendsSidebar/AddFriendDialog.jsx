@@ -10,16 +10,17 @@ import {
   Typography,
 } from "@mui/material";
 import PrimaryButton from "../../../shared/components/PrimaryButton";
+import { sendFriendRequestAction } from "../../../redux/actions/friendsActions";
+import { useDispatch } from "react-redux";
 
-const AddFriendDialog = ({
-  isDialogOpen,
-  closeDialogHandler,
-  sendFriendInvitation = () => {},
-}) => {
+const AddFriendDialog = ({ isDialogOpen, closeDialogHandler }) => {
   const [email, setEmail] = useState("");
   const [isFormValid, setIsFormValid] = useState("");
+  const dispatch = useDispatch();
 
-  const handleSendInvitation = () => {};
+  const handleSendInvitation = () => {
+    dispatch(sendFriendRequestAction(email, closeDialogHandler));
+  };
 
   const handleCloseDialog = () => {
     closeDialogHandler();
