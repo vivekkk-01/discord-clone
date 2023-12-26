@@ -1,5 +1,8 @@
 const { Router } = require("express");
-const { inviteFriend } = require("../controllers/friendInvitation");
+const {
+  inviteFriend,
+  acceptFriend,
+} = require("../controllers/friendInvitation");
 const validator = require("express-joi-validation").createValidator({});
 const Joi = require("joi");
 const verifyToken = require("../middlewares/verifyToken");
@@ -15,5 +18,7 @@ router.post(
   validator.body(friendInvitationSchema),
   inviteFriend
 );
+
+router.patch("/accept", verifyToken, acceptFriend);
 
 module.exports = router;

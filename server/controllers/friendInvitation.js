@@ -65,3 +65,62 @@ exports.inviteFriend = async (req, res) => {
     return res.status(errorStatus).json(err);
   }
 };
+
+exports.acceptFriend = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const sender = await User.findOne({ email });
+    const receiver = await User.findById(req.user);
+    if (!sender)
+      return res.status(402).json("User with that email doesn't exist!");
+
+    if (sender.id.toString() === receiver.id.toString())
+      return res.status(403).json("You can't accept your own request!");
+
+    const doesInvitationExist = await FriendInvitation.findOne({
+      senderId: sender.id,
+      receiverId: receiver.id,
+    });
+
+    if (!doesInvitationExist)
+      return res.status(403).json("Friend invitation doesn't exist!");
+
+    if (
+      receiver.friends.find(
+        (friendId) => friendId.toString() === sender.id.toString()
+      )
+    )
+      return res
+        .status(402)
+        .json("You are already friends. Please, check your friends list.");
+
+    sender.friends.push(receiver.id);
+    receiver.friends.push(sender.id);
+
+    await sender.save();
+    await receiver.save();
+
+    await FriendInvitation.deleteOne({
+      senderId: sender.id,
+      receiverId: receiver.id,
+    });
+
+    return res.json("Friend invitation accepted!");
+  } catch (error) {
+    const err = error?.response
+      ? error.response
+      : error.response?.data
+      ? error.response.data
+      : error?.data
+      ? error.data
+      : "Something went wrong, please try again!";
+    const errorStatus = error?.status
+      ? error.status
+      : error?.http_status
+      ? error.http_status
+      : error?.http_code
+      ? error.http_code
+      : 500;
+    return res.status(errorStatus).json(err);
+  }
+};
