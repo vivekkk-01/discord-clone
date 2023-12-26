@@ -1,5 +1,8 @@
 const FriendInvitation = require("../models/FriendInvitation");
 const User = require("../models/User");
+const {
+  updateFriendsPendingInvitations,
+} = require("../socketHandlers/updates/friends");
 
 exports.inviteFriend = async (req, res) => {
   try {
@@ -21,7 +24,7 @@ exports.inviteFriend = async (req, res) => {
       senderId: user.id,
       receiverId: receiver.id,
     });
-    
+
     if (alreadyInvited)
       return res
         .status(402)
@@ -35,12 +38,13 @@ exports.inviteFriend = async (req, res) => {
       return res
         .status(402)
         .json("You are already friends. Please, check your friends list.");
-    
 
     await FriendInvitation.create({
       senderId: user.id,
       receiverId: receiver.id,
     });
+
+    updateFriendsPendingInvitations(receiver.id);
 
     return res.json("Invitation sent successfully!");
   } catch (error) {

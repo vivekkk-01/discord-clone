@@ -15,6 +15,7 @@ export const connectWithSocketServer = (userDetails) => {
   });
 
   socket.on("friend-invitations", (data) => {
+    console.log("data", data);
     store.dispatch(pendingFriendInvitationsAction(data));
   });
 };
