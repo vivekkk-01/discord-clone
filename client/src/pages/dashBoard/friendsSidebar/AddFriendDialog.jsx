@@ -24,7 +24,7 @@ const AddFriendDialog = ({ isDialogOpen, closeDialogHandler }) => {
 
   const handleCloseDialog = () => {
     closeDialogHandler();
-    setEMail("");
+    setEmail("");
   };
 
   useEffect(() => {
