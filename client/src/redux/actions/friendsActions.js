@@ -1,5 +1,5 @@
 import { sendFriendRequest } from "../../api/friendInvitation";
-import { setAlertOpen } from "../slices/alertSlice";
+import { setAlertClose, setAlertOpen } from "../slices/alertSlice";
 import { setError, setPendingFriendsInvitations } from "../slices/friendsSlice";
 
 export const sendFriendRequestAction =
@@ -8,6 +8,9 @@ export const sendFriendRequestAction =
     if (type === "error") return dispatch(setError(response.data));
     closeDialogHandler();
     dispatch(setAlertOpen("Invitation has been sent!"));
+    setTimeout(() => {
+      dispatch(setAlertClose());
+    }, 3000);
   };
 
 export const pendingFriendInvitationsAction = (data) => (dispatch) => {
