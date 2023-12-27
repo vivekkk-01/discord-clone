@@ -6,6 +6,8 @@ import Messenger from "./messenger/Messenger";
 import AppBar from "./appbar/AppBar";
 import { redirect, useNavigate } from "react-router-dom";
 import { connectWithSocketServer } from "../../communication/socketServer";
+import ErrorAlertNotification from "../../shared/components/ErrorAlertNotification";
+import { useSelector } from "react-redux";
 
 const Wrapper = styled("div")({
   width: "100vw",
@@ -16,6 +18,9 @@ const Wrapper = styled("div")({
 const Dashboard = () => {
   const userDetails = JSON.parse(localStorage.getItem("discord-user"));
   const navigate = useNavigate();
+  const { showErrorAlert, errorAlertContent } = useSelector(
+    (state) => state.errorAlert
+  );
 
   useEffect(() => {
     if (!userDetails) {
@@ -31,6 +36,9 @@ const Dashboard = () => {
       <FriendsSideBar />
       <Messenger />
       <AppBar />
+      {showErrorAlert && (
+        <ErrorAlertNotification errorAlertContent={errorAlertContent} />
+      )}
     </Wrapper>
   );
 };
