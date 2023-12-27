@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  userDetails: localStorage.getItem("discord-user")
-    ? localStorage.getItem("discord-user")
+  userDetails: JSON.parse(localStorage.getItem("discord-user"))
+    ? JSON.parse(localStorage.getItem("discord-user"))
     : null,
   loading: false,
   error: null,
