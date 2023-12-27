@@ -1,5 +1,6 @@
 import {
   acceptFriendRequest,
+  rejectFriendRequest,
   sendFriendRequest,
 } from "../../api/friendInvitation";
 import { setAlertClose, setAlertOpen } from "../slices/alertSlice";
@@ -36,6 +37,21 @@ export const acceptFriendAction = (email) => async (dispatch) => {
     return;
   }
   dispatch(setAlertOpen("Invitation accepted!"));
+  setTimeout(() => {
+    dispatch(setAlertClose());
+  }, 3000);
+};
+
+export const rejectFriendAction = (email) => async (dispatch) => {
+  const { type, response } = rejectFriendRequest({ email });
+  if (type === "error") {
+    dispatch(setErrorAlertOpen(response.data));
+    setTimeout(() => {
+      dispatch(setErrorAlertClose());
+    }, 3000);
+    return;
+  }
+  dispatch(setAlertOpen("Invitation rejected!"));
   setTimeout(() => {
     dispatch(setAlertClose());
   }, 3000);
