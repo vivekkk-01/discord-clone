@@ -20,11 +20,12 @@ const AddFriendDialog = ({ isDialogOpen, closeDialogHandler }) => {
 
   const handleSendInvitation = () => {
     dispatch(sendFriendRequestAction(email, closeDialogHandler));
+    setEmail("");
   };
 
   const handleCloseDialog = () => {
-    closeDialogHandler();
     setEmail("");
+    closeDialogHandler();
   };
 
   useEffect(() => {
