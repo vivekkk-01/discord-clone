@@ -9,7 +9,10 @@ const verifyToken = require("../middlewares/verifyToken");
 
 const router = Router();
 const friendInvitationSchema = Joi.object({
-  email: Joi.string().email().message("Enter a valid email address!"),
+  email: Joi.string()
+    .email()
+    .message("Enter a valid email address!")
+    .required(),
 });
 
 router.post(
@@ -19,6 +22,11 @@ router.post(
   inviteFriend
 );
 
-router.patch("/accept", verifyToken, acceptFriend);
+router.patch(
+  "/accept",
+  verifyToken,
+  validator.body(friendInvitationSchema),
+  acceptFriend
+);
 
 module.exports = router;
