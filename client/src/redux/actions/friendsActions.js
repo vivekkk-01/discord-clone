@@ -8,7 +8,11 @@ import {
   setErrorAlertClose,
   setErrorAlertOpen,
 } from "../slices/errorAlertSlice";
-import { setError, setPendingFriendsInvitations } from "../slices/friendsSlice";
+import {
+  setAcceptOrRejectInvitation,
+  setError,
+  setPendingFriendsInvitations,
+} from "../slices/friendsSlice";
 
 export const sendFriendRequestAction =
   (requestData, closeDialogHandler) => async (dispatch) => {
@@ -40,6 +44,7 @@ export const acceptFriendAction = (email) => async (dispatch) => {
   setTimeout(() => {
     dispatch(setAlertClose());
   }, 3000);
+  dispatch(setAcceptOrRejectInvitation(email));
 };
 
 export const rejectFriendAction = (email) => async (dispatch) => {
@@ -55,6 +60,7 @@ export const rejectFriendAction = (email) => async (dispatch) => {
   setTimeout(() => {
     dispatch(setAlertClose());
   }, 3000);
+  dispatch(setAcceptOrRejectInvitation(email));
 };
 
 export const pendingFriendInvitationsAction = (data) => (dispatch) => {

@@ -23,6 +23,11 @@ const friendsSlice = createSlice({
       state.error = null;
       state.onlineUsers = payload;
     },
+    setAcceptOrRejectInvitation: (state, { payload }) => {
+      state.pendingFriendsInvitations = state.pendingFriendsInvitations.filter(
+        (invitation) => invitation.senderId.email !== payload
+      );
+    },
     setError: (state, { payload }) => {
       state.error = payload;
     },
@@ -33,6 +38,7 @@ export const {
   setFriends,
   setPendingFriendsInvitations,
   setOnlineUsers,
+  setAcceptOrRejectInvitation,
   setError,
 } = friendsSlice.actions;
 export default friendsSlice.reducer;
