@@ -11,6 +11,7 @@ import {
 import {
   setAcceptOrRejectInvitation,
   setError,
+  setFriends,
   setPendingFriendsInvitations,
 } from "../slices/friendsSlice";
 
@@ -65,4 +66,8 @@ export const rejectFriendAction = (email) => async (dispatch) => {
 
 export const pendingFriendInvitationsAction = (data) => (dispatch) => {
   dispatch(setPendingFriendsInvitations(data));
+};
+
+export const friendAcceptedAction = (data) => (dispatch) => {
+  dispatch(setFriends(data.friends));
 };

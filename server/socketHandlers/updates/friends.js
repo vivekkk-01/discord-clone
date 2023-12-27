@@ -27,7 +27,9 @@ const updateFriendsPendingInvitations = async (userId) => {
 
 const updateFriendsAfterAccepting = async (userId) => {
   try {
-    const friends = await User.findById(userId).select("friends");
+    const friends = await User.findById(userId)
+      .populate({ path: "friends", select: "_id email username" })
+      .select("friends");
 
     const senderList = getActiveConnections(userId);
 
