@@ -2,6 +2,7 @@ const FriendInvitation = require("../models/FriendInvitation");
 const User = require("../models/User");
 const {
   updateFriendsPendingInvitations,
+  updateFriendsAfterAccepting,
 } = require("../socketHandlers/updates/friends");
 
 exports.inviteFriend = async (req, res) => {
@@ -104,6 +105,8 @@ exports.acceptFriend = async (req, res) => {
       senderId: sender.id,
       receiverId: receiver.id,
     });
+
+    updateFriendsAfterAccepting(sender.id);
 
     return res.json("Friend invitation accepted!");
   } catch (error) {

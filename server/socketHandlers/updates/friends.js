@@ -25,4 +25,25 @@ const updateFriendsPendingInvitations = async (userId) => {
   }
 };
 
-module.exports = { updateFriendsPendingInvitations };
+const updateFriendsAfterAccepting = async (userId) => {
+  try {
+    const friends = await User.findById(userId).select("friends");
+
+    const senderList = getActiveConnections(userId);
+
+    const io = getSocketServerInstance();
+
+    senderList.forEach((senderSocketId) => {
+      io.to(senderSocketId).emit("friend-accepted", {
+        friends: friends ? friends : null,
+      });
+    });
+  } catch (error) {
+    console.log("Error:-", error);
+  }
+};
+
+module.exports = {
+  updateFriendsPendingInvitations,
+  updateFriendsAfterAccepting,
+};
