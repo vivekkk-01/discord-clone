@@ -28,7 +28,13 @@ export const sendFriendRequestAction =
 
 export const acceptFriendAction = (email) => async (dispatch) => {
   const { type, response } = acceptFriendRequest({ email });
-  if (type === "error") return dispatch(setError(response.data));
+  if (type === "error") {
+    dispatch(setErrorAlertOpen(response.data));
+    setTimeout(() => {
+      dispatch(setErrorAlertClose());
+    }, 3000);
+    return;
+  }
   dispatch(setAlertOpen("Invitation accepted!"));
   setTimeout(() => {
     dispatch(setAlertClose());
