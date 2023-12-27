@@ -1,6 +1,10 @@
 import io from "socket.io-client";
 import store from "../redux/store";
-import { friendAcceptedAction, pendingFriendInvitationsAction } from "../redux/actions/friendsActions";
+import {
+  friendAcceptedAction,
+  onlineUsersAction,
+  pendingFriendInvitationsAction,
+} from "../redux/actions/friendsActions";
 let socket = null;
 
 export const connectWithSocketServer = (userDetails) => {
@@ -19,5 +23,8 @@ export const connectWithSocketServer = (userDetails) => {
   });
   socket.on("friend-accepted", (data) => {
     store.dispatch(friendAcceptedAction(data.friends));
+  });
+  socket.on("online-users", (data) => {
+    store.dispatch(onlineUsersAction(data.onlineUsers));
   });
 };

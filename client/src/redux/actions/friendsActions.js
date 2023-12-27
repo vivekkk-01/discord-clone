@@ -13,6 +13,7 @@ import {
   setAcceptOrRejectInvitation,
   setError,
   setFriends,
+  setOnlineUsers,
   setPendingFriendsInvitations,
 } from "../slices/friendsSlice";
 
@@ -74,4 +75,8 @@ export const pendingFriendInvitationsAction = (data) => (dispatch) => {
 
 export const friendAcceptedAction = (data) => (dispatch) => {
   dispatch(setFriends(data.friends));
+};
+
+export const onlineUsersAction = (data) => (dispatch) => {
+  dispatch(setOnlineUsers(data));
 };
