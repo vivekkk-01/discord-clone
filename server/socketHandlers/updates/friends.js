@@ -7,19 +7,20 @@ const {
 
 const updateFriendsPendingInvitations = async (userId) => {
   try {
-    const pendingInvitations = await FriendInvitation.find({
-      receiverId: userId,
-    }).populate("senderId", "_id username email");
-
     const receiverList = getActiveConnections(userId);
+    if (receiverList.length > 0) {
+      const pendingInvitations = await FriendInvitation.find({
+        receiverId: userId,
+      }).populate("senderId", "_id username email");
 
-    const io = getSocketServerInstance();
+      const io = getSocketServerInstance();
 
-    receiverList.forEach((receiverSocketId) => {
-      io.to(receiverSocketId).emit("friend-invitations", {
-        pendingInvitations: pendingInvitations ? pendingInvitations : null,
+      receiverList.forEach((receiverSocketId) => {
+        io.to(receiverSocketId).emit("friend-invitations", {
+          pendingInvitations: pendingInvitations ? pendingInvitations : null,
+        });
       });
-    });
+    }
   } catch (error) {
     console.log("Error:-", error);
   }
@@ -27,19 +28,20 @@ const updateFriendsPendingInvitations = async (userId) => {
 
 const updateFriendsAfterAccepting = async (userId) => {
   try {
-    const friends = await User.findById(userId)
-      .populate({ path: "friends", select: "_id email username" })
-      .select("friends");
+    const receiverList = getActiveConnections(userId);
+    if (receiverList.length > 0) {
+      const friends = await User.findById(userId)
+        .populate({ path: "friends", select: "_id email username" })
+        .select("friends");
 
-    const senderList = getActiveConnections(userId);
+      const io = getSocketServerInstance();
 
-    const io = getSocketServerInstance();
-
-    senderList.forEach((senderSocketId) => {
-      io.to(senderSocketId).emit("friend-accepted", {
-        friends: friends ? friends : null,
+      receiverList.forEach((receiverSocketId) => {
+        io.to(receiverSocketId).emit("friend-accepted", {
+          friends: friends ? friends : null,
+        });
       });
-    });
+    }
   } catch (error) {
     console.log("Error:-", error);
   }
