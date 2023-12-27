@@ -9,12 +9,12 @@ import {
   rejectFriendAction,
 } from "../../../../redux/actions/friendsActions";
 
-const PendingInvitationsListItem = ({ username, email }) => {
+const PendingInvitationsListItem = ({ _id, username, email }) => {
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
   const dispatch = useDispatch();
 
   const handleAcceptInvitation = () => {
-    dispatch(acceptFriendAction(email));
+    dispatch(acceptFriendAction({ _id, email, username }));
     setButtonsDisabled(true);
   };
 

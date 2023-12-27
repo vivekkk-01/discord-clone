@@ -9,6 +9,7 @@ import {
   setErrorAlertOpen,
 } from "../slices/errorAlertSlice";
 import {
+  setAcceptInvitation,
   setAcceptOrRejectInvitation,
   setError,
   setFriends,
@@ -32,21 +33,24 @@ export const sendFriendRequestAction =
     }, 3000);
   };
 
-export const acceptFriendAction = (email) => async (dispatch) => {
-  const { type, response } = acceptFriendRequest({ email });
-  if (type === "error") {
-    dispatch(setErrorAlertOpen(response.data));
+export const acceptFriendAction =
+  ({ _id, email, username }) =>
+  async (dispatch) => {
+    const { type, response } = acceptFriendRequest({ email });
+    if (type === "error") {
+      dispatch(setErrorAlertOpen(response.data));
+      setTimeout(() => {
+        dispatch(setErrorAlertClose());
+      }, 3000);
+      return;
+    }
+    dispatch(setAlertOpen("Invitation accepted!"));
     setTimeout(() => {
-      dispatch(setErrorAlertClose());
+      dispatch(setAlertClose());
     }, 3000);
-    return;
-  }
-  dispatch(setAlertOpen("Invitation accepted!"));
-  setTimeout(() => {
-    dispatch(setAlertClose());
-  }, 3000);
-  dispatch(setAcceptOrRejectInvitation(email));
-};
+    dispatch(setAcceptOrRejectInvitation(email));
+    dispatch(setAcceptInvitation({ _id, email, username }));
+  };
 
 export const rejectFriendAction = (email) => async (dispatch) => {
   const { type, response } = rejectFriendRequest({ email });

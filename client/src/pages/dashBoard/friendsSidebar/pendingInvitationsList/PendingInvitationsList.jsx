@@ -19,6 +19,7 @@ const PendingInvitationsList = () => {
         return (
           <PendingInvitationsListItem
             key={_id}
+            _id={_id}
             username={senderId.username}
             email={senderId.email}
           />
