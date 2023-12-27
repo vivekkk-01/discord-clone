@@ -1,5 +1,5 @@
 const authSocket = require("./middlewares/authSocket");
-const { setSocketServerInstance } = require("./serverStore");
+const { setSocketServerInstance, getOnlineUsers } = require("./serverStore");
 const disconnectHandler = require("./socketHandlers/disconnectHandler");
 const newConnectionHandler = require("./socketHandlers/newConnectionHandler");
 
@@ -15,6 +15,12 @@ const registerSocketServer = (server) => {
     authSocket(socket, next);
   });
   setSocketServerInstance(io);
+
+  const emitOnlineUsers = () => {
+    const onlineUsers = getOnlineUsers();
+    io.emit("online-users", { onlineUsers });
+  };
+
   io.on("connection", (socket) => {
     console.log("Connected to the socket:-", socket.id);
 
@@ -24,6 +30,10 @@ const registerSocketServer = (server) => {
       disconnectHandler(socket.id);
     });
   });
+
+  setInterval(() => {
+    emitOnlineUsers();
+  }, [1000 * 8]);
 };
 
 module.exports = registerSocketServer;
