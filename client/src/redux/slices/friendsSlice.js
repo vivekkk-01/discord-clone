@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   friends: [],
   pendingFriendsInvitations: [],
-  onlineFriends: [],
+  onlineUsers: [],
   error: null,
 };
 
