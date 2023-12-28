@@ -6,12 +6,12 @@ import { useDispatch } from "react-redux";
 import { setChatTypeAction } from "../../../../redux/actions/chatActions";
 import { setChosenChatDetails } from "../../../../redux/slices/chatSlice";
 
-const FriendListItem = ({ id, isOnline, username }) => {
+const FriendListItem = ({ _id, isOnline, username }) => {
   const dispatch = useDispatch();
 
   const handleChatConversation = () => {
     dispatch(setChatTypeAction("DIRECT"));
-    dispatch(setChosenChatDetails({ id, username }));
+    dispatch(setChosenChatDetails({ _id, username }));
   };
 
   return (

@@ -23,14 +23,14 @@ const FriendsList = () => {
   return (
     <MainContainer>
       {checkOnlineUsers(friends, onlineUsers).map(
-        ({ id, username, isOnline }) => {
+        ({ _id, username, isOnline }) => {
           console.log(isOnline, "is user online?");
           return (
             <FriendListItem
-              key={id}
+              key={_id}
               username={username}
               isOnline={isOnline}
-              id={id}
+              _id={_id}
             />
           );
         }
