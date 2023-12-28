@@ -1,5 +1,6 @@
 const authSocket = require("./middlewares/authSocket");
 const { setSocketServerInstance, getOnlineUsers } = require("./serverStore");
+const directMessageHandler = require("./socketHandlers/directMessageHandler");
 const disconnectHandler = require("./socketHandlers/disconnectHandler");
 const newConnectionHandler = require("./socketHandlers/newConnectionHandler");
 
@@ -26,6 +27,11 @@ const registerSocketServer = (server) => {
 
     newConnectionHandler(socket, io);
     emitOnlineUsers();
+
+    socket.on("send-message", (data) => {
+      directMessageHandler(socket, data);
+    });
+
     socket.on("disconnect", () => {
       disconnectHandler(socket.id);
     });
