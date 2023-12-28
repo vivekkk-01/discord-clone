@@ -2,10 +2,21 @@ import React from "react";
 import { Button, Typography } from "@mui/material";
 import Avatar from "../../../../shared/components/Avatar";
 import OnlineIndicator from "./OnlineIndicator";
+import { useDispatch } from "react-redux";
+import { setChatTypeAction } from "../../../../redux/actions/chatActions";
+import { setChosenChatDetails } from "../../../../redux/slices/chatSlice";
 
 const FriendListItem = ({ id, isOnline, username }) => {
+  const dispatch = useDispatch();
+
+  const handleChatConversation = () => {
+    dispatch(setChatTypeAction("DIRECT"));
+    dispatch(setChosenChatDetails({ id, username }));
+  };
+
   return (
     <Button
+      onClick={handleChatConversation}
       style={{
         width: "100%",
         height: "42px",
