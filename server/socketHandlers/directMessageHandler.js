@@ -24,7 +24,7 @@ const directMessageHandler = async (socket, data) => {
     await conversation.save();
     updateChatHistory(conversation._id.toString());
   } else {
-    await Conversation.create({
+    const conversation = await Conversation.create({
       participants: [userId, receiverUserId],
       messages: [message._id],
     });

@@ -8,7 +8,7 @@ const updateChatHistory = async (
   conversationId,
   toSpecifiedSocketId = null
 ) => {
-  const conversation = Conversation(conversationId).populate({
+  const conversation = await Conversation.findById(conversationId).populate({
     path: "messages",
     model: "Message",
     populate: {
@@ -18,7 +18,7 @@ const updateChatHistory = async (
     },
   });
 
-  if (!conversation) {
+  if (conversation) {
     const io = getSocketServerInstance();
     if (toSpecifiedSocketId) {
       io.to(toSpecifiedSocketId).emit("direct-chat-history", {
@@ -29,8 +29,8 @@ const updateChatHistory = async (
 
     conversation.participants.forEach((userId) => {
       const activeConnections = getActiveConnections(userId.toString());
-
       activeConnections.forEach((socketId) => {
+        console.log("Socket id", socketId);
         io.to(socketId).emit("direct-chat-history", {
           messages: conversation.messages,
           participants: conversation.participants,
