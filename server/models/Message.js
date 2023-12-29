@@ -6,7 +6,7 @@ const messageSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-  content: String,
+  content: Object,
   date: Date,
   type: String,
 });
