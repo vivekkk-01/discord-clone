@@ -40,6 +40,8 @@ const Message = ({ sameAuthor, date, sameDay, message, content, username }) => {
     );
   }
 
+  console.log(date, "Date");
+
   return (
     <MainContainer>
       <AvatarContainer>

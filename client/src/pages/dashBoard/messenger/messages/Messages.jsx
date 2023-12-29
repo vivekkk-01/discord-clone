@@ -3,6 +3,7 @@ import { styled } from "@mui/system";
 import MessagesHeader from "./MessagesHeader";
 import { useSelector } from "react-redux";
 import Message from "./Message";
+import DateSeparator from "./DateSeparator";
 
 const MainContainer = styled("div")({
   height: "calc(100% - 60px)",
@@ -92,15 +93,21 @@ const Messages = () => {
           convertDate(new Date(message.date), "dd/mm/yy") ===
             convertDate(new Date(messages[index - 1].date), "dd/mm/yy");
         return (
-          <Message
-            key={message._id}
-            message={message._id}
-            sameAuthor={sameAuthor}
-            date={convertDate(new Date(message.date, "dd/mm/yy"))}
-            content={message.content}
-            sameDay={sameDay}
-            username={message.author.username}
-          />
+          <div key={message._id} style={{ width: "97%" }}>
+            {(!sameDay || index === 0) && (
+              <DateSeparator
+                date={convertDate(new Date(message.date), "dd/mm/yy")}
+              />
+            )}
+            <Message
+              message={message._id}
+              sameAuthor={sameAuthor}
+              date={convertDate(new Date(message.date), "dd/mm/yy")}
+              content={message.content}
+              sameDay={sameDay}
+              username={message.author.username}
+            />
+          </div>
         );
       })}
     </MainContainer>
