@@ -27,8 +27,15 @@ export const connectWithSocketServer = (userDetails) => {
   socket.on("online-users", (data) => {
     store.dispatch(onlineUsersAction(data.onlineUsers));
   });
+  socket.on("direct-chat-history", (data) => {
+    console.log("Data", data);
+  });
 };
 
 export const sendDirectMessage = (data) => {
   socket.emit("send-message", data);
+};
+
+export const chatDirectHistory = (data) => {
+  socket?.emit("direct-chat-history", data);
 };
