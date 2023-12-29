@@ -5,6 +5,7 @@ import {
   onlineUsersAction,
   pendingFriendInvitationsAction,
 } from "../redux/actions/friendsActions";
+import updateChatHistoryIfActive from "../shared/utils/updateChatHistoryIfActive";
 let socket = null;
 
 export const connectWithSocketServer = (userDetails) => {
@@ -28,7 +29,7 @@ export const connectWithSocketServer = (userDetails) => {
     store.dispatch(onlineUsersAction(data.onlineUsers));
   });
   socket.on("direct-chat-history", (data) => {
-    console.log("Data", data);
+    updateChatHistoryIfActive(data);
   });
 };
 

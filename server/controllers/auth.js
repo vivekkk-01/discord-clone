@@ -17,7 +17,7 @@ exports.register = async (req, res) => {
     });
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-    return res.status(201).json({ email, username, token });
+    return res.status(201).json({ id: user._id, email, username, token });
   } catch (error) {
     return res
       .status(500)
@@ -40,7 +40,12 @@ exports.login = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     return res
       .status(201)
-      .json({ email: user.email, username: user.username, token });
+      .json({
+        id: user._id,
+        email: user.email,
+        username: user.username,
+        token,
+      });
   } catch (error) {
     return res
       .status(500)
