@@ -14,7 +14,8 @@ const MainContainer = styled("div")({
 const Input = styled("input")({
   backgroundColor: "#2f3136",
   width: "98%",
-  height: "50px",
+  height: "45px",
+  marginTop: "5px",
   color: "white",
   border: "none",
   borderRadius: "8px",

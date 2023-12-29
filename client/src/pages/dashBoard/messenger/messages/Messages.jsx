@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { styled } from "@mui/system";
 import MessagesHeader from "./MessagesHeader";
 import { useSelector } from "react-redux";
@@ -79,6 +79,11 @@ const convertDate = (date, format) => {
 
 const Messages = () => {
   const { chosenChatDetails, messages } = useSelector((state) => state.chat);
+  const scrollRef = useRef();
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <MainContainer>
@@ -93,7 +98,7 @@ const Messages = () => {
           convertDate(new Date(message.date), "dd/mm/yy") ===
             convertDate(new Date(messages[index - 1].date), "dd/mm/yy");
         return (
-          <div key={message._id} style={{ width: "97%" }}>
+          <div ref={scrollRef} key={message._id} style={{ width: "97%" }}>
             {(!sameDay || index === 0) && (
               <DateSeparator
                 date={convertDate(new Date(message.date), "dd/mm/yy")}
