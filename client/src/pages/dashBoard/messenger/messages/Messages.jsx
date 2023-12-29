@@ -74,6 +74,7 @@ const Messages = () => {
       {DUMMY_MESSAGES.map((message, index) => {
         return (
           <Message
+            key={message._id}
             message={message._id}
             sameAuthor={message.sameAuthor}
             date={message.date}
