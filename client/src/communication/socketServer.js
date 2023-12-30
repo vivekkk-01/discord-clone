@@ -6,6 +6,7 @@ import {
   pendingFriendInvitationsAction,
 } from "../redux/actions/friendsActions";
 import updateChatHistoryIfActive from "../shared/utils/updateChatHistoryIfActive";
+import { createdNewRom } from "./roomHandler";
 let socket = null;
 
 export const connectWithSocketServer = (userDetails) => {
@@ -31,6 +32,9 @@ export const connectWithSocketServer = (userDetails) => {
   socket.on("direct-chat-history", (data) => {
     updateChatHistoryIfActive(data);
   });
+  socket.on("create-room", ({ roomDetails }) => {
+    createdNewRom(roomDetails);
+  });
 };
 
 export const sendDirectMessage = (data) => {
@@ -39,4 +43,8 @@ export const sendDirectMessage = (data) => {
 
 export const chatDirectHistory = (data) => {
   socket?.emit("direct-chat-history", data);
+};
+
+export const createNewRoomInServer = () => {
+  socket?.emit("create-room");
 };

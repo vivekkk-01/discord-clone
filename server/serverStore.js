@@ -1,4 +1,6 @@
 const connectedUsers = new Map();
+let activeRooms = [];
+const { v4: uuidv4 } = require("uuid");
 
 let io = null;
 
@@ -12,13 +14,10 @@ const getSocketServerInstance = () => {
 
 const addNewConnectedUser = ({ socketId, userId }) => {
   connectedUsers.set(socketId, { userId });
-  console.log("Connected users:-", connectedUsers);
 };
 
 const removeDisconnectedUser = (socketId) => {
-  console.log("Does it have:", connectedUsers, socketId);
   if (connectedUsers.has(socketId)) {
-    console.log("Disconnected...");
     connectedUsers.delete(socketId);
   }
 };
@@ -41,6 +40,25 @@ const getOnlineUsers = () => {
   return onlineUsers;
 };
 
+const addNewActiveRoom = (userId, socketId) => {
+  const newActiveRoom = {
+    roomCreator: {
+      userId,
+      socketId,
+    },
+    participants: [
+      {
+        userId,
+        socketId,
+      },
+    ],
+    roomId: uuidv4(),
+  };
+  activeRooms = [...activeRooms, newActiveRoom];
+  console.log("Active rooms:-", activeRooms);
+  return newActiveRoom;
+};
+
 module.exports = {
   addNewConnectedUser,
   removeDisconnectedUser,
@@ -48,4 +66,5 @@ module.exports = {
   setSocketServerInstance,
   getSocketServerInstance,
   getOnlineUsers,
+  addNewActiveRoom,
 };

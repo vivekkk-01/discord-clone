@@ -21,9 +21,12 @@ const roomSlice = createSlice({
       state.isUserInRoom = isUserInRoom;
       state.isUserRoomCreator = isUserRoomCreator;
     },
+    setRoomDetails: (state, { payload }) => {
+      state.roomDetails = payload;
+    },
   },
 });
 
 export default roomSlice.reducer;
 
-export const { setOpenRoom } = roomSlice.actions;
+export const { setOpenRoom, setRoomDetails } = roomSlice.actions;
