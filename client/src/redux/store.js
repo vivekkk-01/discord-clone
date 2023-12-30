@@ -4,6 +4,7 @@ import alert from "./slices/alertSlice";
 import errorAlert from "./slices/errorAlertSlice";
 import friends from "./slices/friendsSlice";
 import chat from "./slices/chatSlice";
+import room from "./slices/roomSlice";
 
 const reducer = combineReducers({
   auth,
@@ -11,6 +12,7 @@ const reducer = combineReducers({
   errorAlert,
   friends,
   chat,
+  room,
 });
 
 export default configureStore({ reducer });
