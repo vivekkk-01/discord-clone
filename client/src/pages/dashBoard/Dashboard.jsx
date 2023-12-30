@@ -8,6 +8,7 @@ import { redirect, useNavigate } from "react-router-dom";
 import { connectWithSocketServer } from "../../communication/socketServer";
 import ErrorAlertNotification from "../../shared/components/ErrorAlertNotification";
 import { useSelector } from "react-redux";
+import Room from "./room/Room";
 
 const Wrapper = styled("div")({
   width: "100vw",
@@ -21,6 +22,7 @@ const Dashboard = () => {
   const { showErrorAlert, errorAlertContent } = useSelector(
     (state) => state.errorAlert
   );
+  const { isUserInRoom } = useSelector((state) => state.room);
 
   useEffect(() => {
     if (!userDetails) {
@@ -36,6 +38,7 @@ const Dashboard = () => {
       <FriendsSideBar />
       <Messenger />
       <AppBar />
+      {isUserInRoom && <Room />}
       {showErrorAlert && (
         <ErrorAlertNotification errorAlertContent={errorAlertContent} />
       )}
