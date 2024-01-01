@@ -1,3 +1,4 @@
+const User = require("./models/User");
 const connectedUsers = new Map();
 let activeRooms = [];
 const { v4: uuidv4 } = require("uuid");
@@ -40,10 +41,13 @@ const getOnlineUsers = () => {
   return onlineUsers;
 };
 
-const addNewActiveRoom = (userId, socketId) => {
+const addNewActiveRoom = async (userId, socketId) => {
+  const user = await User.findById(userId).select("username");
+  const { username, _id } = user;
   const newActiveRoom = {
     roomCreator: {
-      userId,
+      userId: _id,
+      username,
       socketId,
     },
     participants: [
