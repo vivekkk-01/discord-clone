@@ -51,3 +51,7 @@ export const chatDirectHistory = (data) => {
 export const createNewRoomInServer = () => {
   socket?.emit("create-room");
 };
+
+export const joinRoom = ({ roomId }) => {
+  socket.emit("join-room", { roomId });
+};

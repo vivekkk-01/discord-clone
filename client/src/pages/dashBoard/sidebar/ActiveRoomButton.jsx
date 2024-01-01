@@ -2,6 +2,12 @@ import { Tooltip } from "@mui/material";
 import React from "react";
 import PrimaryButton from "../../../shared/components/PrimaryButton";
 import Avatar from "../../../shared/components/Avatar";
+import { useDispatch } from "react-redux";
+import {
+  openRoomAction,
+  roomDetailsAction,
+} from "../../../redux/actions/roomActions";
+import { joinRoom } from "../../../communication/socketServer";
 
 const ActiveRoomButton = ({
   roomId,
@@ -9,9 +15,12 @@ const ActiveRoomButton = ({
   amountOfParticipants,
   isUserInRoom,
 }) => {
+  const dispatch = useDispatch();
   const handleJoinRoom = () => {
     if (amountOfParticipants < 4) {
-      // join the room
+      dispatch(openRoomAction(true, false));
+      dispatch(roomDetailsAction({ roomId }));
+      joinRoom({ roomId });
     }
   };
 
