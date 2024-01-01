@@ -35,9 +35,8 @@ export const connectWithSocketServer = (userDetails) => {
   socket.on("create-room", ({ roomDetails }) => {
     createdNewRom(roomDetails);
   });
-  socket.on("active-room", ({ activeRooms: activeRoom }) => {
-    console.log("Received event!");
-    handleActiveRooms(activeRoom);
+  socket.on("active-room", ({ activeRooms }) => {
+    handleActiveRooms(activeRooms);
   });
 };
 

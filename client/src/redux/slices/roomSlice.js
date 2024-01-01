@@ -25,7 +25,7 @@ const roomSlice = createSlice({
       state.roomDetails = payload;
     },
     setActiveRooms: (state, { payload }) => {
-      state.activeRooms = [...state.activeRooms, ...payload];
+      state.activeRooms = payload;
     },
   },
 });

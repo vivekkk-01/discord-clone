@@ -15,6 +15,6 @@ export const createdNewRom = (roomDetails) => {
   store.dispatch(roomDetailsAction(roomDetails));
 };
 
-export const handleActiveRooms = (activeRoom) => {
-  store.dispatch(activeRoomsAction(activeRoom));
+export const handleActiveRooms = (activeRooms) => {
+  store.dispatch(activeRoomsAction(activeRooms));
 };

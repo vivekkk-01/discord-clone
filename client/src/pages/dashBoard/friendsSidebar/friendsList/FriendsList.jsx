@@ -24,7 +24,6 @@ const FriendsList = () => {
     <MainContainer>
       {checkOnlineUsers(friends, onlineUsers).map(
         ({ _id, username, isOnline }) => {
-          console.log(isOnline, "is user online?");
           return (
             <FriendListItem
               key={_id}
