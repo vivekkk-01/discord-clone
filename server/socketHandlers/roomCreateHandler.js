@@ -1,4 +1,5 @@
 const { addNewActiveRoom } = require("../serverStore");
+const { updateRooms } = require("./updates/rooms");
 
 const roomCreateHandler = (socket) => {
   const socketId = socket.id;
@@ -9,5 +10,6 @@ const roomCreateHandler = (socket) => {
   socket.emit("create-room", {
     roomDetails,
   });
+  updateRooms({ userId });
 };
 module.exports = roomCreateHandler;

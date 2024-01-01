@@ -35,6 +35,9 @@ export const connectWithSocketServer = (userDetails) => {
   socket.on("create-room", ({ roomDetails }) => {
     createdNewRom(roomDetails);
   });
+  socket.on("active-room", (data) => {
+    console.log("Data:-", data);
+  });
 };
 
 export const sendDirectMessage = (data) => {

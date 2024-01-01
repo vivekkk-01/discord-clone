@@ -37,7 +37,6 @@ const registerSocketServer = (server) => {
     });
 
     socket.on("create-room", () => {
-      console.log("Creating room...");
       roomCreateHandler(socket);
     });
 
