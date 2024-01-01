@@ -1,5 +1,6 @@
 import store from "../redux/store";
 import {
+  activeRoomsAction,
   openRoomAction,
   roomDetailsAction,
 } from "../redux/actions/roomActions";
@@ -12,4 +13,8 @@ export const createNewRoom = () => {
 
 export const createdNewRom = (roomDetails) => {
   store.dispatch(roomDetailsAction(roomDetails));
+};
+
+export const handleActiveRooms = (activeRoom) => {
+  store.dispatch(activeRoomsAction(activeRoom));
 };

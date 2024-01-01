@@ -6,7 +6,7 @@ import {
   pendingFriendInvitationsAction,
 } from "../redux/actions/friendsActions";
 import updateChatHistoryIfActive from "../shared/utils/updateChatHistoryIfActive";
-import { createdNewRom } from "./roomHandler";
+import { createdNewRom, handleActiveRooms } from "./roomHandler";
 let socket = null;
 
 export const connectWithSocketServer = (userDetails) => {
@@ -35,8 +35,9 @@ export const connectWithSocketServer = (userDetails) => {
   socket.on("create-room", ({ roomDetails }) => {
     createdNewRom(roomDetails);
   });
-  socket.on("active-room", (data) => {
-    console.log("Data:-", data);
+  socket.on("active-room", ({ activeRooms: activeRoom }) => {
+    console.log("Received event!");
+    handleActiveRooms(activeRoom);
   });
 };
 
