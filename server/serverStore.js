@@ -66,6 +66,24 @@ const getActiveRooms = () => {
   return [...activeRooms];
 };
 
+const getActiveRoomDetails = (roomId) => {
+  const roomDetails = activeRooms.find((room) => room.roomId === roomId);
+  return roomDetails;
+};
+
+const joinActiveRoom = (roomId, participantDetails) => {
+  const room = activeRooms.find((activeRoom) => activeRoom.roomId === roomId);
+  activeRooms = activeRooms.filter(
+    (activeRoom) => activeRoom.roomId !== roomId
+  );
+  const updatedRoom = {
+    ...room,
+    participants: [...room.participants, { ...participantDetails }],
+  };
+
+  activeRooms.push(updatedRoom);
+};
+
 module.exports = {
   addNewConnectedUser,
   removeDisconnectedUser,
@@ -75,4 +93,6 @@ module.exports = {
   getOnlineUsers,
   addNewActiveRoom,
   getActiveRooms,
+  getActiveRoomDetails,
+  joinActiveRoom,
 };
