@@ -3,6 +3,7 @@ import {
   setOpenRoom,
   setRoomDetails,
 } from "../slices/roomSlice";
+import store from "../store";
 
 export const openRoomAction =
   (isUserInRoom = false, isUserRoomCreator = false) =>
@@ -15,17 +16,27 @@ export const roomDetailsAction = (roomDetails) => (dispatch) => {
 };
 
 export const activeRoomsAction = (activeRooms) => (dispatch) => {
+  const userId = store.getState().auth.userDetails.id;
   const rooms = [];
   const roomIds = [];
   activeRooms.forEach((room) => {
     if (rooms.length === 0) {
-      rooms.push({ ...room });
-      roomIds.push(room.roomId);
+      if (room.roomCreator.userId === userId) {
+        return;
+      } else {
+        rooms.push({ ...room });
+        roomIds.push(room.roomId);
+      }
     } else {
       if (roomIds.includes(room.roomId)) {
         return;
       } else {
-        rooms.push({ ...room });
+        if (room.roomCreator.userId === userId) {
+          return;
+        } else {
+          rooms.push({ ...room });
+          roomIds.push(room.roomId);
+        }
       }
     }
   });
