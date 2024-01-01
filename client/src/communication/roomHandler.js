@@ -4,7 +4,7 @@ import {
   openRoomAction,
   roomDetailsAction,
 } from "../redux/actions/roomActions";
-import { createNewRoomInServer } from "./socketServer";
+import { createNewRoomInServer, leaveRoom } from "./socketServer";
 
 export const createNewRoom = () => {
   store.dispatch(openRoomAction(true, true));
@@ -17,4 +17,11 @@ export const createdNewRom = (roomDetails) => {
 
 export const handleActiveRooms = (activeRooms) => {
   store.dispatch(activeRoomsAction(activeRooms));
+};
+
+export const leaveRoomHandler = () => {
+  const { roomId } = store.getState().room.roomDetails;
+  store.dispatch(openRoomAction(false, false));
+  store.dispatch(roomDetailsAction(null));
+  leaveRoom({ roomId });
 };

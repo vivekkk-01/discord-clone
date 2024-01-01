@@ -55,3 +55,7 @@ export const createNewRoomInServer = () => {
 export const joinRoom = ({ roomId }) => {
   socket.emit("join-room", { roomId });
 };
+
+export const leaveRoom = (data) => {
+  socket.emit("leave-room", data);
+};
