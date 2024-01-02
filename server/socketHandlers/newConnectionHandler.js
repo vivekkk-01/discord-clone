@@ -3,10 +3,15 @@ const {
   updateFriendsAfterAccepting,
   updateFriendsPendingInvitations,
 } = require("./updates/friends");
+const { updateRooms } = require("./updates/rooms");
 
-const newConnectionHandler = (socket, io) => {
+const newConnectionHandler = async (socket, io) => {
   const userDetails = socket.user;
-  addNewConnectedUser({ socketId: socket.id, userId: userDetails.id });
+  await updateRooms({ toSpecifiedSocketId: socket.id, userId: null });
+  addNewConnectedUser({
+    socketId: socket.id,
+    userId: userDetails.id,
+  });
   updateFriendsPendingInvitations(userDetails.id);
   updateFriendsAfterAccepting(userDetails.id);
 };

@@ -16,6 +16,7 @@ export const createdNewRom = (roomDetails) => {
 };
 
 export const handleActiveRooms = (activeRooms) => {
+  console.log("Active rooms:-", activeRooms);
   store.dispatch(activeRoomsAction(activeRooms));
 };
 

@@ -24,8 +24,12 @@ export const activeRoomsAction = (activeRooms) => (dispatch) => {
       if (room.roomCreator.userId === userId) {
         return;
       } else {
-        rooms.push({ ...room });
-        roomIds.push(room.roomId);
+        store.getState().friends.friends.forEach((friend) => {
+          if (friend._id.toString() === room.roomCreator.userId.toString()) {
+            rooms.push({ ...room });
+            roomIds.push(room.roomId);
+          }
+        });
       }
     } else {
       if (roomIds.includes(room.roomId)) {
@@ -34,8 +38,12 @@ export const activeRoomsAction = (activeRooms) => (dispatch) => {
         if (room.roomCreator.userId === userId) {
           return;
         } else {
-          rooms.push({ ...room });
-          roomIds.push(room.roomId);
+          store.getState().friends.friends.forEach((friend) => {
+            if (friend._id.toString() === room.roomCreator.userId.toString()) {
+              rooms.push({ ...room });
+              roomIds.push(room.roomId);
+            }
+          });
         }
       }
     }
