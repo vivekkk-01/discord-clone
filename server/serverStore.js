@@ -73,15 +73,32 @@ const getActiveRoomDetails = (roomId) => {
 
 const joinActiveRoom = (roomId, participantDetails) => {
   const room = activeRooms.find((activeRoom) => activeRoom.roomId === roomId);
-  activeRooms = activeRooms.filter(
-    (activeRoom) => activeRoom.roomId !== roomId
-  );
   const updatedRoom = {
     ...room,
     participants: [...room.participants, { ...participantDetails }],
   };
 
+  activeRooms = activeRooms.filter(
+    (activeRoom) => activeRoom.roomId !== roomId
+  );
+
   activeRooms.push(updatedRoom);
+};
+
+const leaveActiveRoom = (roomId, userId) => {
+  const activeRoom = activeRooms.find((room) => room.roomId === roomId);
+  if (activeRoom) {
+    activeRoom.participants = activeRoom.participants.filter(
+      (participant) => participant.userId.toString() !== userId.toString()
+    );
+    activeRooms = activeRooms.filter((room) => room.roomId !== roomId);
+    if (
+      activeRoom.participants.length > 0 &&
+      activeRoom.roomCreator.userId.toString() !== userId
+    ) {
+      activeRooms.push(activeRoom);
+    }
+  }
 };
 
 module.exports = {
@@ -95,4 +112,5 @@ module.exports = {
   getActiveRooms,
   getActiveRoomDetails,
   joinActiveRoom,
+  leaveActiveRoom,
 };
