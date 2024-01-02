@@ -5,10 +5,14 @@ import {
   roomDetailsAction,
 } from "../redux/actions/roomActions";
 import { createNewRoomInServer, leaveRoom } from "./socketServer";
+import { getLocalStreamPreview } from "./webRTCHandler";
 
 export const createNewRoom = () => {
-  store.dispatch(openRoomAction(true, true));
-  createNewRoomInServer();
+  const successCallbackFunc = () => {
+    store.dispatch(openRoomAction(true, true));
+    createNewRoomInServer();
+  };
+  getLocalStreamPreview(false, successCallbackFunc);
 };
 
 export const createdNewRom = (roomDetails) => {

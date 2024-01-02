@@ -1,5 +1,6 @@
 import {
   setActiveRooms,
+  setLocalStream,
   setOpenRoom,
   setRoomDetails,
 } from "../slices/roomSlice";
@@ -49,4 +50,8 @@ export const activeRoomsAction = (activeRooms) => (dispatch) => {
     }
   });
   dispatch(setActiveRooms(rooms));
+};
+
+export const setLocalStreamAction = (stream) => (dispatch) => {
+  dispatch(setLocalStream(stream));
 };

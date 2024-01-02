@@ -27,10 +27,13 @@ const roomSlice = createSlice({
     setActiveRooms: (state, { payload }) => {
       state.activeRooms = payload;
     },
+    setLocalStream: (state, { payload }) => {
+      state.localStream = payload;
+    },
   },
 });
 
 export default roomSlice.reducer;
 
-export const { setOpenRoom, setRoomDetails, setActiveRooms } =
+export const { setOpenRoom, setRoomDetails, setActiveRooms, setLocalStream } =
   roomSlice.actions;

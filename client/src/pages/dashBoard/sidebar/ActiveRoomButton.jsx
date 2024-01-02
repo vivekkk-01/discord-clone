@@ -8,6 +8,7 @@ import {
   roomDetailsAction,
 } from "../../../redux/actions/roomActions";
 import { joinRoom } from "../../../communication/socketServer";
+import { getLocalStreamPreview } from "../../../communication/webRTCHandler";
 
 const ActiveRoomButton = ({
   roomId,
@@ -17,11 +18,14 @@ const ActiveRoomButton = ({
 }) => {
   const dispatch = useDispatch();
   const handleJoinRoom = () => {
-    if (amountOfParticipants < 4) {
-      dispatch(openRoomAction(true, false));
-      dispatch(roomDetailsAction({ roomId }));
-      joinRoom({ roomId });
-    }
+    const successCallbackFunc = () => {
+      if (amountOfParticipants < 4) {
+        dispatch(openRoomAction(true, false));
+        dispatch(roomDetailsAction({ roomId }));
+        joinRoom({ roomId });
+      }
+    };
+    getLocalStreamPreview(false, successCallbackFunc);
   };
 
   const roomButtonDisabled = amountOfParticipants > 3;
