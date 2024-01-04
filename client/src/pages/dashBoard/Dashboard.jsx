@@ -30,7 +30,7 @@ const Dashboard = () => {
     } else {
       connectWithSocketServer(userDetails);
     }
-  }, [userDetails]);
+  }, []);
 
   return (
     <Wrapper>

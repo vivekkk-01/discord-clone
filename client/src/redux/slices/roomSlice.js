@@ -30,10 +30,18 @@ const roomSlice = createSlice({
     setLocalStream: (state, { payload }) => {
       state.localStream = payload;
     },
+    setAudioOnly: (state, { payload }) => {
+      state.audioOnly = payload;
+    },
   },
 });
 
 export default roomSlice.reducer;
 
-export const { setOpenRoom, setRoomDetails, setActiveRooms, setLocalStream } =
-  roomSlice.actions;
+export const {
+  setOpenRoom,
+  setRoomDetails,
+  setActiveRooms,
+  setLocalStream,
+  setAudioOnly,
+} = roomSlice.actions;

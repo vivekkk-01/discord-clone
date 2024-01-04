@@ -17,7 +17,7 @@ export const connectWithSocketServer = (userDetails) => {
   });
 
   socket.on("connect", () => {
-    console.log("connected with server...", socket);
+    // console.log("connected with server...", socket);
   });
 
   socket.on("friend-invitations", (data) => {

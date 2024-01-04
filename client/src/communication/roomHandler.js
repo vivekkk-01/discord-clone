@@ -12,7 +12,8 @@ export const createNewRoom = () => {
     store.dispatch(openRoomAction(true, true));
     createNewRoomInServer();
   };
-  getLocalStreamPreview(false, successCallbackFunc);
+  const audioOnly = store.getState().room.audioOnly;
+  getLocalStreamPreview(audioOnly, successCallbackFunc);
 };
 
 export const createdNewRom = (roomDetails) => {
@@ -20,7 +21,6 @@ export const createdNewRom = (roomDetails) => {
 };
 
 export const handleActiveRooms = (activeRooms) => {
-  console.log("Active rooms:-", activeRooms);
   store.dispatch(activeRoomsAction(activeRooms));
 };
 

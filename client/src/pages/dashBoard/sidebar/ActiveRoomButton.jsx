@@ -2,7 +2,7 @@ import { Tooltip } from "@mui/material";
 import React from "react";
 import PrimaryButton from "../../../shared/components/PrimaryButton";
 import Avatar from "../../../shared/components/Avatar";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   openRoomAction,
   roomDetailsAction,
@@ -17,6 +17,7 @@ const ActiveRoomButton = ({
   isUserInRoom,
 }) => {
   const dispatch = useDispatch();
+  const { audioOnly } = useSelector((state) => state.room);
   const handleJoinRoom = () => {
     const successCallbackFunc = () => {
       if (amountOfParticipants < 4) {
@@ -25,7 +26,7 @@ const ActiveRoomButton = ({
         joinRoom({ roomId });
       }
     };
-    getLocalStreamPreview(false, successCallbackFunc);
+    getLocalStreamPreview(audioOnly, successCallbackFunc);
   };
 
   const roomButtonDisabled = amountOfParticipants > 3;

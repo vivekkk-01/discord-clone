@@ -1,5 +1,6 @@
 import {
   setActiveRooms,
+  setAudioOnly,
   setLocalStream,
   setOpenRoom,
   setRoomDetails,
@@ -54,4 +55,8 @@ export const activeRoomsAction = (activeRooms) => (dispatch) => {
 
 export const setLocalStreamAction = (stream) => (dispatch) => {
   dispatch(setLocalStream(stream));
+};
+
+export const setAudioOnlyAction = (data) => (dispatch) => {
+  dispatch(setAudioOnly(data));
 };
