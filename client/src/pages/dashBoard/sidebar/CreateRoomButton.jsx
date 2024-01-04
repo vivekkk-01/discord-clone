@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { createNewRoom } from "../../../communication/roomHandler";
 import { useDispatch, useSelector } from "react-redux";
 import { openRoomAction } from "../../../redux/actions/roomActions";
+import { createNewRoomInServer } from "../../../communication/socketServer";
 
 const CreateRoomButton = () => {
   const dispatch = useDispatch();
