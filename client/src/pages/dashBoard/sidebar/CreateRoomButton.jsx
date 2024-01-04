@@ -8,7 +8,9 @@ import { createNewRoomInServer } from "../../../communication/socketServer";
 
 const CreateRoomButton = () => {
   const dispatch = useDispatch();
-  const { audioOnly, isUserInRoom } = useSelector((state) => state.room);
+  const { audioOnly, isUserInRoom, isUserRoomCreator } = useSelector(
+    (state) => state.room
+  );
 
   const successCallbackFunc = () => {
     dispatch(openRoomAction(true, true));
@@ -20,10 +22,10 @@ const CreateRoomButton = () => {
   };
 
   useEffect(() => {
-    if (isUserInRoom) {
+    if ((isUserInRoom, isUserRoomCreator)) {
       createRoomHandler();
     }
-  }, [audioOnly, isUserInRoom]);
+  }, [audioOnly, isUserInRoom, isUserRoomCreator]);
 
   return (
     <Button
