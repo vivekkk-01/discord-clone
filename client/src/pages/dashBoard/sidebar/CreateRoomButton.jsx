@@ -23,7 +23,7 @@ const CreateRoomButton = () => {
 
   useEffect(() => {
     if ((isUserInRoom, isUserRoomCreator)) {
-      createNewRoom(audioOnly, successCallbackFunc);
+      createNewRoom(audioOnly, () => {});
     }
   }, [audioOnly, isUserInRoom, isUserRoomCreator]);
 
