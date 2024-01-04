@@ -17,12 +17,10 @@ const addNewConnectedUser = ({ socketId, userId }) => {
   connectedUsers.set(socketId, { userId });
 };
 
-const removeDisconnectedUser = (userId) => {
-  connectedUsers.forEach((key, value) => {
-    if (key.userId === userId) {
-      connectedUsers.delete(value);
-    }
-  });
+const removeDisconnectedUser = (socketId) => {
+  if (connectedUsers.has(socketId)) {
+    connectedUsers.delete(socketId);
+  }
 };
 
 const getActiveConnections = (userId) => {
