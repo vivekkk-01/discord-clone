@@ -1,12 +1,29 @@
 import { Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import React from "react";
+import React, { useEffect } from "react";
 import { createNewRoom } from "../../../communication/roomHandler";
+import { useDispatch, useSelector } from "react-redux";
+import { openRoomAction } from "../../../redux/actions/roomActions";
 
 const CreateRoomButton = () => {
-  const createRoomHandler = () => {
-    createNewRoom()
+  const dispatch = useDispatch();
+  const { audioOnly, isUserInRoom } = useSelector((state) => state.room);
+
+  const successCallbackFunc = () => {
+    dispatch(openRoomAction(true, true));
+    createNewRoomInServer();
   };
+
+  const createRoomHandler = () => {
+    createNewRoom(audioOnly, successCallbackFunc);
+  };
+
+  useEffect(() => {
+    if (isUserInRoom) {
+      createRoomHandler();
+    }
+  }, [audioOnly, isUserInRoom]);
+
   return (
     <Button
       onClick={createRoomHandler}

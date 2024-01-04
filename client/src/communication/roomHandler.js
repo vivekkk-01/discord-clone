@@ -4,15 +4,10 @@ import {
   openRoomAction,
   roomDetailsAction,
 } from "../redux/actions/roomActions";
-import { createNewRoomInServer, leaveRoom } from "./socketServer";
+import { leaveRoom } from "./socketServer";
 import { getLocalStreamPreview } from "./webRTCHandler";
 
-export const createNewRoom = () => {
-  const successCallbackFunc = () => {
-    store.dispatch(openRoomAction(true, true));
-    createNewRoomInServer();
-  };
-  const audioOnly = store.getState().room.audioOnly;
+export const createNewRoom = (audioOnly, successCallbackFunc) => {
   getLocalStreamPreview(audioOnly, successCallbackFunc);
 };
 

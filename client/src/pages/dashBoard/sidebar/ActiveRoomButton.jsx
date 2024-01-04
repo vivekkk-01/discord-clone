@@ -1,5 +1,5 @@
 import { Tooltip } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import PrimaryButton from "../../../shared/components/PrimaryButton";
 import Avatar from "../../../shared/components/Avatar";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,16 +18,22 @@ const ActiveRoomButton = ({
 }) => {
   const dispatch = useDispatch();
   const { audioOnly } = useSelector((state) => state.room);
+  const successCallbackFunc = () => {
+    if (amountOfParticipants < 4) {
+      dispatch(openRoomAction(true, false));
+      dispatch(roomDetailsAction({ roomId }));
+      joinRoom({ roomId });
+    }
+  };
   const handleJoinRoom = () => {
-    const successCallbackFunc = () => {
-      if (amountOfParticipants < 4) {
-        dispatch(openRoomAction(true, false));
-        dispatch(roomDetailsAction({ roomId }));
-        joinRoom({ roomId });
-      }
-    };
     getLocalStreamPreview(audioOnly, successCallbackFunc);
   };
+
+  useEffect(() => {
+    if (isUserInRoom) {
+      handleJoinRoom();
+    }
+  }, [audioOnly, isUserInRoom]);
 
   const roomButtonDisabled = amountOfParticipants > 3;
   const roomTitle = `Creator: ${creatorUsername}. Connected: ${amountOfParticipants}`;
