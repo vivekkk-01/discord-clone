@@ -77,6 +77,12 @@ export const friendAcceptedAction = (data) => (dispatch) => {
   dispatch(setFriends(data.friends));
 };
 
+export const setFriendsAction =
+  ({ friends }) =>
+  (dispatch) => {
+    dispatch(setFriends(friends.friends));
+  };
+
 export const onlineUsersAction = (data) => (dispatch) => {
   dispatch(setOnlineUsers(data));
 };

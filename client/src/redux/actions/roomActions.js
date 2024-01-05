@@ -23,7 +23,7 @@ export const activeRoomsAction = (activeRooms) => (dispatch) => {
   const roomIds = [];
   activeRooms.forEach((room) => {
     if (rooms.length === 0) {
-      if (room.roomCreator.userId === userId) {
+      if (room.roomCreator.userId.toString() === userId.toString()) {
         return;
       } else {
         store.getState().friends.friends.forEach((friend) => {

@@ -47,7 +47,15 @@ const updateFriendsAfterAccepting = async (userId) => {
   }
 };
 
+const updateFriendsList = async (socket, userId) => {
+  const friends = await User.findById(userId)
+    .populate({ path: "friends", select: "_id email username" })
+    .select("friends");
+  socket.emit("friends", { friends });
+};
+
 module.exports = {
   updateFriendsPendingInvitations,
   updateFriendsAfterAccepting,
+  updateFriendsList,
 };

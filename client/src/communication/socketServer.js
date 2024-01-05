@@ -4,6 +4,7 @@ import {
   friendAcceptedAction,
   onlineUsersAction,
   pendingFriendInvitationsAction,
+  setFriendsAction,
 } from "../redux/actions/friendsActions";
 import updateChatHistoryIfActive from "../shared/utils/updateChatHistoryIfActive";
 import { createdNewRom, handleActiveRooms } from "./roomHandler";
@@ -25,6 +26,9 @@ export const connectWithSocketServer = (userDetails) => {
   });
   socket.on("friend-accepted", (data) => {
     store.dispatch(friendAcceptedAction(data.friends));
+  });
+  socket.on("friends", (data) => {
+    store.dispatch(setFriendsAction(data));
   });
   socket.on("online-users", (data) => {
     store.dispatch(onlineUsersAction(data.onlineUsers));
