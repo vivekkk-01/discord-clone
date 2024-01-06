@@ -12,7 +12,7 @@ export const createNewRoom = (audioOnly, successCallbackFunc) => {
   getLocalStreamPreview(audioOnly, successCallbackFunc);
 };
 
-export const createdNewRom = (roomDetails) => {
+export const createdNewRoom = (roomDetails) => {
   store.dispatch(roomDetailsAction(roomDetails));
 };
 
@@ -22,12 +22,12 @@ export const handleActiveRooms = (activeRooms) => {
 
 export const leaveRoomHandler = () => {
   const { roomId } = store.getState().room.roomDetails;
+  leaveRoom({ roomId });
   const { localStream } = store.getState().room;
-  store.dispatch(openRoomAction(false, false));
-  store.dispatch(roomDetailsAction(null));
   if (localStream) {
     localStream.getTracks().forEach((track) => track.stop());
     store.dispatch(setLocalStreamAction(null));
   }
-  leaveRoom({ roomId });
+  store.dispatch(roomDetailsAction(null));
+  store.dispatch(openRoomAction(false, false));
 };

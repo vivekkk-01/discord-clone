@@ -7,7 +7,7 @@ import {
   setFriendsAction,
 } from "../redux/actions/friendsActions";
 import updateChatHistoryIfActive from "../shared/utils/updateChatHistoryIfActive";
-import { createdNewRom, handleActiveRooms } from "./roomHandler";
+import { createdNewRoom, handleActiveRooms } from "./roomHandler";
 let socket = null;
 
 export const connectWithSocketServer = (userDetails) => {
@@ -37,7 +37,7 @@ export const connectWithSocketServer = (userDetails) => {
     updateChatHistoryIfActive(data);
   });
   socket.on("create-room", ({ roomDetails }) => {
-    createdNewRom(roomDetails);
+    createdNewRoom(roomDetails);
   });
   socket.on("active-room", ({ activeRooms }) => {
     handleActiveRooms(activeRooms);
